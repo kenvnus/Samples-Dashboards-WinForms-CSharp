@@ -42,3 +42,13 @@
 ### Task 3: Add templates (mrt files) to the Bin/Debug/Dashboard folder.
 ### Task 4: Modify code in FormMain()
 ### Task 5: Testing the combo box to have all the items loading correctly. Testing the buttons "Open Dashboard Designer" to see if the corect template is used. Testing for each template in the drop down list.
+# Feature 7: Litterate programming
+## User story F: As a programmer, I want to add documentation language to programming language so that the program is more robust, more portable and easily maintained.
+### Task 1: Add more explainations of how the functions and variables and some codes to project Edit Dashboard in the Designer.
+### Task 2: Add more explainations of how the functions and variables and some codes to project Add a Custom Function.
+### Task 3: Add more explainations of how the functions and variables and some codes to project Export Dashboard.
+### Task 4: Add more explainations of how the functions and variables and some codes to project Asynchronous Export.
+### Task 5: Add more explainations of how the functions and variables and some codes to project Register Data for Dashboard Templates.
+# Feature 8: Programming By Contract.
+## User story G: As a programmer, I want to create a contract between the developer and software user so that it reduced the time in debugger and reduced the need for error checking.
+### Task 1: Create preconditions and postconditions by using assertion mechanisms.
