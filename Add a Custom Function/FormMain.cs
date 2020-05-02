@@ -4,6 +4,7 @@ using Stimulsoft.Report.Dictionary;
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace Add_a_Custom_Function
 {
@@ -26,12 +27,26 @@ namespace Add_a_Custom_Function
         {
             InitializeComponent();
 
+            var dict = new Dictionary<string, string>
+            {
+                {"Select a template",""},
+                {"Christmas","Dashboards\\Christmas.mrt"},
+                {"Exchange Tenders","Dashboards\\Exchange Tenders.mrt"},
+                {"Fast Food Lunch","Dashboards\\Fast Food Lunch.mrt"}
+            };
+            cmbTemplates.DataSource = new BindingSource(dict, null);
+            cmbTemplates.DisplayMember = "Key";
+            cmbTemplates.ValueMember = "Value";
+            buttonDesigner.Enabled = false;
+            AddCustomFunction();
+            this.cmbTemplates.SelectedIndexChanged += new System.EventHandler(cmbTemplates_SelectedIndexChanged);
+            cmbTemplates.Focus();
+
             // How to Activate
             //Stimulsoft.Base.StiLicense.Key = "6vJhGtLLLz2GNviWmUTrhSqnO...";
             //Stimulsoft.Base.StiLicense.LoadFromFile("license.key");
             //Stimulsoft.Base.StiLicense.LoadFromStream(stream);
-
-            AddCustomFunction();
+           
         }
 
         private void AddCustomFunction()
@@ -46,12 +61,35 @@ namespace Add_a_Custom_Function
                 new[] { "A set of values" }).UseFullPath = false;
         }
 
+        private void cmbTemplates_SelectedIndexChanged(Object sender, System.EventArgs e) 
+        {
+            //Cursor = Cursors.WaitCursor;
+            //Cursor = Cursors.Default;
+            buttonDesigner.Enabled = true;
+        }
+
         private void buttonDesigner_Click(object sender, EventArgs e)
         {
             var report = StiReport.CreateNewDashboard();
-            report.Load("Dashboards\\Christmas.mrt");
-
+            if (cmbTemplates.Text.Length == 0)
+            {
+                string key = ((KeyValuePair<String, String>)cmbTemplates.SelectedItem).Key;
+                string value = ((KeyValuePair<String, String>)cmbTemplates.SelectedItem).Value;
+                report.Load(value);
+            }
+            else
+            {
+                report.Load("Dashboards\\Christmas.mrt");               
+            }
             report.Design();
         }
+
+        //private void buttonDesigner_Click(object sender, EventArgs e)
+        //{
+        //    var report = StiReport.CreateNewDashboard();
+        //    report.Load("Dashboards\\Christmas.mrt");
+
+        //    report.Design();
+        //}
     }
 }
