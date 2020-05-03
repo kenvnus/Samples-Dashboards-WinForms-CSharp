@@ -23,10 +23,17 @@ namespace Edit_Dashboard_in_the_Designer
                 {"Exchange Tenders","Dashboards\\Exchange Tenders.mrt"},
                 {"Fast Food Lunch","Dashboards\\Fast Food Lunch.mrt"}
             };
+            //Using VS Code Contract for Precondition
+            foreach( KeyValuePair<string, string> kvp in dict )
+            {               
+                Contract.Requires(File.Exists(kvp.Value), "Failed contract: template not exists");
+            }
+
             //binding the dict collection to the datasource for the drop down list
             cmbTemplates.DataSource = new BindingSource(dict, null);
             cmbTemplates.DisplayMember = "Key";
             cmbTemplates.ValueMember = "Value";
+
             //disable the button "Open dashboard Designer" till users select an item from the drop down list.
             buttonEdit.Enabled = false;
             buttonNew.Enabled = false;
@@ -46,12 +53,13 @@ namespace Edit_Dashboard_in_the_Designer
             {
                 string key = ((KeyValuePair<String,String>)cmbTemplates.SelectedItem).Key;
                 string value = ((KeyValuePair<String, String>)cmbTemplates.SelectedItem).Value;
-                //Debug.Assert(File.Exists(value));
+                Debug.Assert(File.Exists(value));
                 //loading a report template from the file (value is the path of the file)            
                 report.Load(value);                              
             }
             else
             {
+                Debug.Assert(File.Exists("Dashboards\\Christmas.mrt"));
                 report.Load("Dashboards\\Christmas.mrt");
             }
             return report;
@@ -68,7 +76,6 @@ namespace Edit_Dashboard_in_the_Designer
                 buttonNew.Enabled = false;
                 MessageBox.Show("Please select a template from drop down list.", "Edit Dashboard In Designer-FormMain");
                 cmbTemplates.Focus();
-
             }
             //a template is selected, enable the button "Edit" and button "New"
             else

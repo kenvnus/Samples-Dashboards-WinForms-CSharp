@@ -17,7 +17,7 @@ namespace Add_a_Custom_Function
         {
             public static decimal MySum(object value)
             {
-                //Debug.Assert(value != null);
+                Debug.Assert(value != null);
                 if (!ListExt.IsList(value))
                     return Stimulsoft.Base.Helpers.StiValueHelper.TryToDecimal(value);
 
@@ -39,6 +39,12 @@ namespace Add_a_Custom_Function
                 {"Exchange Tenders","Dashboards\\Exchange Tenders.mrt"},
                 {"Fast Food Lunch","Dashboards\\Fast Food Lunch.mrt"}
             };
+            //Using VS Code Contract for Precondition
+            foreach (KeyValuePair<string, string> kvp in dict)
+            {
+                Contract.Requires(File.Exists(kvp.Value), "Failed contract: template not exists");
+            }
+
             //binding the dict collection to the datasource for the drop down list
             cmbTemplates.DataSource = new BindingSource(dict, null);
             cmbTemplates.DisplayMember = "Key";
@@ -96,13 +102,13 @@ namespace Add_a_Custom_Function
                 //Retrieve the path of the template file from the template drop down list 
                 string value = ((KeyValuePair<String, String>)cmbTemplates.SelectedItem).Value;
                 
-                //Debug.Assert(File.Exists(value));
+                Debug.Assert(File.Exists(value));
                 //loading a report template from the file (value is the path of the file)
                 report.Load(value);
             }
             else //default template is Christmas.mrt
             {
-                //Debug.Assert(Directory.Exists("Dashboards\\Christmas.mrt"));
+                Debug.Assert(Directory.Exists("Dashboards\\Christmas.mrt"));
                 report.Load("Dashboards\\Christmas.mrt");               
             }
             // Calls the designer for the report in the Modal window.
